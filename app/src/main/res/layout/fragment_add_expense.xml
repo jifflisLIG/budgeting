@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.main.add_expense.AddExpense">
+
+    <RelativeLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:padding="12dp">
+
+
+        <TextView
+            android:id="@+id/lblTotalBalance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="TOTAL Balance"
+            android:textColor="@color/white"/>
+
+        <TextView
+            android:id="@+id/balance"
+            android:layout_marginBottom="8dp"
+            android:layout_below="@+id/lblTotalBalance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="4,500.00"
+            android:textColor="@color/white"
+            android:textSize="45sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:layout_below="@+id/balance"
+            android:id="@+id/lblAccount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="Boarding House Rent"
+            android:textColor="@color/gray400"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/description"
+            android:layout_marginBottom="5dp"
+            android:layout_below="@+id/lblAccount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="6000 budget, expense is 500"
+            android:textColor="@color/gray400"/>
+    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/expense"
+        android:layout_marginTop="50dp"
+        android:layout_marginRight="18dp"
+        android:layout_marginLeft="18dp"
+        android:layout_below="@id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:textAlignment="center"/>
+
+    <TextView
+        android:id="@+id/lblexpense"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/expense"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Expense"/>
+
+    <EditText
+        android:id="@+id/remarks"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="18dp"
+        android:layout_marginLeft="18dp"
+        android:layout_below="@id/lblexpense"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
+    <TextView
+        android:id="@+id/lblRemarks"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/remarks"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Remarks"
+        android:textAlignment="center"/>
+
+
+    <Button
+        android:id="@+id/submit"
+        android:layout_below="@id/lblRemarks"
+        android:layout_marginTop="50dp"
+        android:layout_marginRight="18dp"
+        android:layout_marginLeft="18dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccent"
+        android:text="Submit"
+        android:textColor="@color/white"/>
+
+</RelativeLayout>

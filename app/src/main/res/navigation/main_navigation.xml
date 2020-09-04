@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/home2">
+
+    <fragment
+        android:id="@+id/home2"
+        android:name="com.sakayta.budgetapp.activity.main.home.Home"
+        android:label="home_fragment"
+        tools:layout="@layout/home_fragment" >
+        <action
+            android:id="@+id/action_home2_to_addAcount"
+            app:destination="@id/addAcount"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"/>
+        <action
+            android:id="@+id/action_home2_to_addExpense"
+            app:destination="@id/addExpense"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"/>
+    </fragment>
+    <fragment
+        android:id="@+id/addAcount"
+        android:name="com.sakayta.budgetapp.activity.main.add_account.AddAcount"
+        android:label="add_account_fragment"
+        tools:layout="@layout/add_account_fragment" >
+
+    </fragment>
+    <fragment
+        android:id="@+id/addExpense"
+        android:name="com.sakayta.budgetapp.activity.main.add_expense.AddExpense"
+        android:label="fragment_add_expense"
+        tools:layout="@layout/fragment_add_expense" />
+</navigation>
