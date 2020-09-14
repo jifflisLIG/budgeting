@@ -12,7 +12,8 @@ import com.sakayta.budgetapp.model.*
     AppSettings::class,
     User::class,
     UserPayload::class,
-    UserAccount::class
+    UserAccount::class,
+    AccountLedger::class
 
 ], version = 1)
 abstract class AppDatabase: RoomDatabase() {
@@ -23,6 +24,7 @@ abstract class AppDatabase: RoomDatabase() {
     abstract  fun  getUserDao():UserDao
     abstract  fun getUserPayloadDao():UserPayloadDao
     abstract  fun getUserAccountDao():UserAccountDao
+    abstract  fun getAccountLedgertDao():AccountLedgerDao
 
     companion object {
         // Singleton prevents multiple instances of database opening at the

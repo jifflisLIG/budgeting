@@ -12,6 +12,14 @@ class UserRepository(val userDao:UserDao)
     :JobManager("UserRepository") {
 
 
+    companion object{
+        const val PARENTJOB = "UserRepositoryJob"
+    }
+
+    init {
+        addJob(PARENTJOB, Job())
+    }
+
     suspend fun getUserById(id:String):User{
         return GlobalScope.async (Dispatchers.IO){
             return@async userDao.getUser(id)
@@ -35,6 +43,12 @@ class UserRepository(val userDao:UserDao)
     fun save(user: User){
         GlobalScope.launch {
             userDao.insert(user)
+        }
+    }
+
+    fun update(user: User){
+        GlobalScope.launch {
+            userDao.update(user)
         }
     }
 

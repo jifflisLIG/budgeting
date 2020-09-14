@@ -28,9 +28,13 @@ class User(
     var password:String = "",
 
     @ColumnInfo(name = "pic_path")
-    var pic_path:String = ""
+    var pic_path:String = "",
+
+    @ColumnInfo(name="refresh_date")
+    var refreshDate:String =""
 
 ) : Parcelable {
-
-
+    override fun toString(): String {
+        return "User(id=$id, user_id='$user_id', email='$email', username='$username', password='$password', pic_path='$pic_path', refreshDate='$refreshDate')"
+    }
 }

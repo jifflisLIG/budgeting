@@ -27,6 +27,9 @@ class Account(
     @ColumnInfo(name = "amount_balance")
     var amount_balance:Double = 0.0,
 
+    @ColumnInfo(name = "amount_adjusted")
+    var amount_adjusted:Double = 0.0,
+
     @ColumnInfo(name = "created_at")
     var created_at:String = ""
 ) : Parcelable{

@@ -19,15 +19,35 @@ class AccountRepository(val accountDao: AccountDao):
 
     suspend fun getAccounts():List<Account>{
         return GlobalScope.async (Dispatchers.IO){
-            return@async accountDao.getAllAcounts(page = 1,pageSize = 10)
+            return@async accountDao.getAllAcounts(page = 1,pageSize = 50)
          }.await()
     }
+
+    suspend fun getTotalBudget():Double{
+        return GlobalScope.async (Dispatchers.IO){
+            return@async accountDao.getTotalBudget()
+        }.await()
+    }
+
+    suspend fun getTotalExpenses():Double{
+        return GlobalScope.async (Dispatchers.IO){
+            return@async accountDao.getTotalExpenses()
+        }.await()
+    }
+
+    suspend fun getTotalBalance():Double{
+        return GlobalScope.async (Dispatchers.IO){
+            return@async accountDao.getTotalBalance()
+        }.await()
+    }
+
 
     suspend fun getAcountAndExpense():List<AcountWithTransaction>{
         return GlobalScope.async (Dispatchers.IO){
             return@async accountDao.getAcountAndExpense()
         }.await()
     }
+
 
     fun insert(account:Account){
         GlobalScope.launch(Dispatchers.IO) {

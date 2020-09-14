@@ -3,12 +3,14 @@ package com.sakayta.budgetapp.activity.main.home
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
+import android.os.Build
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -18,8 +20,9 @@ import com.sakayta.budgetapp.activity.main.HomeViewModel
 import com.sakayta.budgetapp.model.Account
 import com.sakayta.budgetapp.util.Constants
 import com.sakayta.budgetapp.util.Resource
+import com.sakayta.budgetapp.util.SimpleDividerItemDecoration
 import kotlinx.android.synthetic.main.home_fragment.*
-import java.lang.ClassCastException
+import java.text.DecimalFormat
 
 class Home : Fragment(),HomeAdapter.HomeAdapterListener {
 
@@ -27,6 +30,7 @@ class Home : Fragment(),HomeAdapter.HomeAdapterListener {
     private  lateinit var adapter:HomeAdapter;
 
     private  lateinit var mlistener:HomeInteractionListener
+    var decimalFormat: DecimalFormat = DecimalFormat("#,###.00")
 
     interface HomeInteractionListener{
         fun isLoading(flag:Boolean)
@@ -78,28 +82,32 @@ class Home : Fragment(),HomeAdapter.HomeAdapterListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         val view:View = inflater.inflate(R.layout.home_fragment, container, false);
         return view
     }
 
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-
         viewModel = ViewModelProvider(requireActivity()).get(HomeViewModel::class.java)
 
-
         adapter = HomeAdapter(this)
-
         recycler.layoutManager=LinearLayoutManager(context)
         recycler.adapter = adapter
+        recycler.addItemDecoration(SimpleDividerItemDecoration(this.context))
+        viewModel.initialize()
 
-        viewModel.loadAccounts()
-        viewModel.getAccountWithExpense()
+        viewModel.getAccountDetails()
+        viewModel.loadData()
+
+
         observeAcountList()
+        observeAccountRefresher()
+        observeAccountDetails()
+
         showNoData(1)
 
         fab.setOnClickListener{
@@ -109,6 +117,34 @@ class Home : Fragment(),HomeAdapter.HomeAdapterListener {
 
     }
 
+
+    private fun observeAccountDetails(){
+        viewModel.observeAccountDetails().observe(viewLifecycleOwner, Observer {resource->
+            when(resource){
+
+                is Resource.Loading->{
+                    budget.text = "..."
+                    expenses.text = "..."
+                    balance.text = "..."
+                }
+
+                is Resource.Error ->{
+                    budget.text = "...!"
+                    expenses.text = "...!"
+                    balance.text = "Error!"
+                }
+
+                is Resource.Success ->{
+                    val accountDetails = resource.data
+                    budget.text = decimalFormat.format(accountDetails!!.budget)
+                    expenses.text = decimalFormat.format(accountDetails!!.expenses)
+                    balance.text = decimalFormat.format(accountDetails!!.balance)
+                }
+
+            }
+        })
+
+    }
 
     private fun observeAcountList(){
         viewModel.observeAccoutList().observe(viewLifecycleOwner, Observer {resource->
@@ -132,6 +168,28 @@ class Home : Fragment(),HomeAdapter.HomeAdapterListener {
         })
 
     }
+
+
+    private fun observeAccountRefresher(){
+        viewModel.observeAcountRefresher().observe(viewLifecycleOwner, Observer {resource->
+            when(resource){
+
+                is Resource.Loading->{
+                    mlistener.isLoading(true)
+                }
+
+                is Resource.Error ->{
+                    mlistener.isLoading(false)
+                }
+
+                is Resource.Success ->{
+                    mlistener.isLoading(false)
+                }
+
+            }
+        })
+    }
+
 
     fun loadAccounts(accounts:ArrayList<Account>?){
         adapter.accountList = accounts

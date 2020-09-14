@@ -3,6 +3,8 @@ package com.sakayta.budgetapp.persistence
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
+import com.sakayta.budgetapp.model.Account
 import com.sakayta.budgetapp.model.User
 
 @Dao
@@ -20,5 +22,7 @@ interface UserDao {
     @Query("Select * from user where username = :username")
     suspend fun getUserByUsername(username:String):User
 
+    @Update
+    suspend fun update(user: User):Int
 
 }

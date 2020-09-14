@@ -25,6 +25,14 @@ interface AccountDao {
     @Query("SELECT * FROM account where account_id LIKE '%' || :query|| '%'")
     fun getAccount(query:String):LiveData<Account>
 
+    @Query("SELECT SUM(amount_budget) FROM account")
+    fun getTotalBudget():Double
+
+    @Query("SELECT SUM(amount_expense) FROM account")
+    fun getTotalExpenses():Double
+
+    @Query("SELECT SUM(amount_balance) FROM account")
+    fun getTotalBalance():Double
 
     @Query("SELECT * FROM account" +
             " WHERE account_name LIKE '%' || :query || '%' " +

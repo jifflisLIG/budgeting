@@ -80,8 +80,6 @@ class AddAcount : Fragment() {
             account_name.requestFocus()
         }
 
-
-
     }
 
     private fun updateAccount(){
